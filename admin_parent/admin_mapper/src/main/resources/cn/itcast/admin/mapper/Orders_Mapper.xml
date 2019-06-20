@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.itcast.admin.mapper.OrdersMapper">
+   <!-- <resultMap id="OrdersMap" type="orders">
+        <result column="id"  property="id"></result>
+        <result column="orderNum" property="orderNum"></result>
+        <result column="orderTime" property="orderTime"></result>
+        <result column="orderStatus" property="orderStatus"></result>
+       &lt;!&ndash; <association property="product" javaType="product">
+            <result column="productName" property="productName"></result>
+            <result column="productPrice" property="productPrice"></result>
+        </association>&ndash;&gt;
+
+    </resultMap>-->
+
+    <resultMap id="OrdersMap" type="orders">
+        <result column="id" property="id"></result>
+        <result column="orderNum" property="orderNum"></result>
+        <result column="orderTime" property="orderTime"></result>
+        <result column="orderStatus" property="orderStatus"></result>
+        <association property="product" column="product">
+            <result column="productName" property="productName"></result>
+            <result column="productPrice" property="productPrice"></result>
+        </association>
+    </resultMap>
+    <select id="findAll" resultMap="OrdersMap">
+        select * from orders o,product p where o.productid=p.id
+    </select>
+</mapper>

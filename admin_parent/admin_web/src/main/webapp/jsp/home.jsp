@@ -163,192 +163,24 @@
 
     <div class="content-wrapper">
 
-        <!-- 内容头部 -->
-        <section class="content-header">
-            <h1>
-                数据管理 <small>数据列表</small>
-            </h1>
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
-                <li><a href="#">数据管理</a></li>
-                <li class="active">数据列表</li>
-            </ol>
-        </section>
-        <!-- 内容头部 /-->
-
-        <!-- 正文区域 -->
-        <section class="content">
-
-            <!-- .box-body -->
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">列表</h3>
-                </div>
-
-                <div class="box-body">
-
-                    <!-- 数据表格 -->
-                    <div class="table-box">
-
-                        <!--工具栏-->
-                        <div class="pull-left">
-                            <div class="form-group form-inline">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default" title="新建"
-                                            onclick="location.href='${pageContext.request.contextPath}/jsp/product-add.jsp'">
-                                        <i class="fa fa-file-o"></i> 新建
-                                    </button>
-                                    <button type="button" class="btn btn-default" title="删除">
-                                        <i class="fa fa-trash-o"></i> 删除
-                                    </button>
-                                    <button type="button" class="btn btn-default" title="开启">
-                                        <i class="fa fa-check"></i> 开启
-                                    </button>
-                                    <button type="button" class="btn btn-default" title="屏蔽">
-                                        <i class="fa fa-ban"></i> 屏蔽
-                                    </button>
-                                    <button type="button" class="btn btn-default" title="刷新">
-                                        <i class="fa fa-refresh"></i> 刷新
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="box-tools pull-right">
-                            <div class="has-feedback">
-                                <input type="text" class="form-control input-sm"
-                                       placeholder="搜索"> <span
-                                    class="glyphicon glyphicon-search form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <!--工具栏/-->
-
-                        <!--数据列表-->
-                        <table id="dataList"
-                               class="table table-bordered table-striped table-hover dataTable">
-                            <thead>
-                            <tr>
-                                <th class="" style="padding-right: 0px;"><input
-                                        id="selall" type="checkbox" class="icheckbox_square-blue">
-                                </th>
-                                <th class="sorting_asc">ID</th>
-                                <th class="sorting_desc">编号</th>
-                                <th class="sorting_asc sorting_asc_disabled">产品名称</th>
-                                <th class="sorting_desc sorting_desc_disabled">出发城市</th>
-                                <th class="sorting">出发时间</th>
-                                <th class="text-center sorting">产品价格</th>
-                                <th class="sorting">产品描述</th>
-                                <th class="text-center sorting">状态</th>
-                                <th class="text-center">操作</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-
-                            <c:forEach items="${pageInfo.list}" var="product">
-
-                                <tr>
-                                    <td><input name="ids" type="checkbox"></td>
-                                    <td>${product.id }</td>
-                                    <td>${product.productNum }</td>
-                                    <td>${product.productName }</td>
-                                    <td>${product.cityName }</td>
-                                    <td>${product.departureTimeStr }</td>
-                                    <td class="text-center">${product.productPrice }</td>
-                                    <td>${product.productDesc }</td>
-                                    <td class="text-center">${product.productStatusStr }</td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn bg-olive btn-xs">订单</button>
-                                        <button type="button" class="btn bg-olive btn-xs">详情</button>
-                                        <button type="button" class="btn bg-olive btn-xs">编辑</button>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                            </tbody>
-                            <!--
-                        <tfoot>
-                        <tr>
-                        <th>Rendering engine</th>
-                        <th>Browser</th>
-                        <th>Platform(s)</th>
-                        <th>Engine version</th>
-                        <th>CSS grade</th>
-                        </tr>
-                        </tfoot>-->
-                        </table>
-                        <!--数据列表/-->
-
-                        <!--工具栏-->
-
-                        </div>
-                        <!--工具栏/-->
-
-                    </div>
-                    <!-- 数据表格 /-->
-
-
-                </div>
-                <!-- /.box-body -->
-
-                <!-- .box-footer-->
-                <div class="box-footer">
-                    <div class="pull-left">
-                        <div class="form-group form-inline">
-                            总共${pageInfo.pages}页，共${pageInfo.total}条数据。 每页
-                            <select class="form-control" id="changePageSize" onchange="changePageSize()">
-                                <c:forEach begin="1" end="5" var="index">
-                                    <c:if test="${pageInfo.pageSize==index}">
-                                        <option selected>${index}</option>
-                                    </c:if>
-                                    <c:if test="${pageInfo.pageSize!=index}">
-                                        <option>${index}</option>
-                                    </c:if>
-                                </c:forEach>
-
-                            </select> 条
-                        </div>
-                    </div>
-
-                    <div class="box-tools pull-right">
-                        <ul class="pagination">
-                            <li><a href="${pageContext.request.contextPath}/product/findAll.do?page=1&size=${pageInfo.pageSize}" aria-label="Previous">首页</a></li>
-                            <li><a href="${pageContext.request.contextPath}/product/findAll.do?page=${pageInfo.prePage}&size=${pageInfo.pageSize}">上一页</a></li>
-                            <c:forEach begin="1" end="${pageInfo.pages}" var="index">
-                                <li><a href="${pageContext.request.contextPath}/product/findAll.do?page=${index}&size=${pageInfo.pageSize}">${index}</a></li>
-                            </c:forEach>
-
-
-                            <li><a href="${pageContext.request.contextPath}/product/findAll.do?page=${pageInfo.nextPage}&size=${pageInfo.pageSize}">下一页</a></li>
-                            <li><a href="${pageContext.request.contextPath}/product/findAll.do?page=${pageInfo.pages}&size=${pageInfo.pageSize}" aria-label="Next">尾页</a></li>
-                        </ul>
-                    </div>
-
-                </div>
-                <!-- /.box-footer-->
-
-
-
-
-
-        </section>
-        <!-- 正文区域 /-->
-
+    <img src="../img/center.jpg" width="100%" height="100%">
     </div>
     <!-- @@close -->
     <!-- 内容区域 /-->
 
     <!-- 底部导航 -->
-    <footer class="main-footer" style="text-align: center;background-color: #a2292900">
-        <div class="pull-right hidden-xs">
-            <b>Version</b> 1.0.8
-        </div>
-        <strong>Copyright &copy; 2014-2017 <a
-                href="http://www.itcast.cn">研究院研发部</a>.
-        </strong> All rights reserved.
-    </footer>
+
     <!-- 底部导航 /-->
 
 </div>
-
+<footer class="main-footer" style="text-align: center;background-color: #a2292900">
+    <div class="pull-right hidden-xs">
+        <b>Version</b> 1.0.8
+    </div>
+    <strong>Copyright &copy; 2014-2017 <a
+            href="http://www.itcast.cn">研究院研发部</a>.
+    </strong> All rights reserved.
+</footer>
 
 <script
         src="${pageContext.request.contextPath}/plugins/jQuery/jquery-2.2.3.min.js"></script>
@@ -447,11 +279,6 @@
             locale : 'zh-CN'
         });
     });
-
-    function changePageSize() {
-        var pageSize = $("#changePageSize").val();
-        location.href="${pageContext.request.contextPath}/product/findAll.do?page=1&size="+pageSize;
-    }
 
     // 设置激活菜单
     function setSidebarActive(tagUri) {
